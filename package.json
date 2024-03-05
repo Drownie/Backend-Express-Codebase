@@ -1,0 +1,40 @@
+{
+  "name": "mamon-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "start:dev": "npm run build && pm2 restart pm2_config.json",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc"
+  },
+  "author": "drownie",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.5",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase": "^10.7.0",
+    "firebase-admin": "^11.11.1",
+    "joi": "^17.11.0",
+    "moment-timezone": "^0.5.44",
+    "pg": "^8.11.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/crypto-js": "^4.2.1",
+    "@types/express": "^4.17.21",
+    "@types/pg": "^8.10.9",
+    "@types/uuid": "^9.0.7",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.2"
+  }
+}
