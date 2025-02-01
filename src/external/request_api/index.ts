@@ -1,19 +1,7 @@
 import axios from "axios";
 
-export class RequestApiService {
-    private static _RequestApiService: _RequestApiService;
-
-    static getService() {
-        if (this._RequestApiService == null) {
-            this._RequestApiService = new _RequestApiService();
-        }
-
-        return this._RequestApiService;
-    }
-}
-
-class _RequestApiService {
-    async get(url: string, headers: any = {}, params: any = {}) {
+class RequestApiService {
+    static async get(url: string, headers: any = {}, params: any = {}) {
         try {
             return await axios.get(url, {
                 headers: headers,
@@ -24,7 +12,7 @@ class _RequestApiService {
         }
     }
 
-    async post(url: string, headers: any = {}, body: any = {}) {
+    static async post(url: string, headers: any = {}, body: any = {}) {
         try {
             return await axios.post(url, body, {
                 headers: headers
@@ -34,7 +22,7 @@ class _RequestApiService {
         }
     }
 
-    async patch(url: string, headers: any = {}, body: any = {}) {
+    static async patch(url: string, headers: any = {}, body: any = {}) {
         try {
             return await axios.patch(url, body, {
                 headers: headers
@@ -44,7 +32,7 @@ class _RequestApiService {
         }
     }
 
-    async delete(url: string, headers: any = {}, body: any = {}) {
+    static async delete(url: string, headers: any = {}, body: any = {}) {
         try {
             return await axios.delete(url, {
                 headers: headers,
@@ -55,7 +43,7 @@ class _RequestApiService {
         }
     }
 
-    async put(url: string, headers: any = {}, body: any = {}) {
+    static async put(url: string, headers: any = {}, body: any = {}) {
         try {
             return await axios.put(url, body, {
                 headers: headers

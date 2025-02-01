@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
 
-import { setting } from '../../config';
+import { setting } from '../../config/setting';
 
 export class FirebaseService {
     private static _FirebaseService: _FirebaseService;

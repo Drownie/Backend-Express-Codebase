@@ -1,14 +1,8 @@
-import { IRouteConfiguration } from "../utils/common.interface";
-import { AccountRoute } from "./account/route";
-import { AuthRoute } from "./auth/route";
-import { ConsoleRoute } from "./console/route";
-import { TransactionRoute } from "./transaction/route";
+import { IRouteConfiguration } from '../common/common.interface';
 
-const routes: IRouteConfiguration[] = [
-    ...AuthRoute,
-    ...TransactionRoute,
-    ...AccountRoute,
-    ...ConsoleRoute
+// Import Routes
+import { UserRoute } from './user/route';
+
+export const routes: IRouteConfiguration[] = [
+    ...UserRoute,
 ]
-
-export default routes;

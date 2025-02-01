@@ -1,9 +1,9 @@
 {
     "apps": [
         {
-            "name": "backend-template",
+            "name": "backend-express-codebase",
             "script": "npm",
-            "args": "run start",
+            "args": "run local:dev:start",
             "watch": false,
             "instances": 1,
             "exec_mode": "cluster",

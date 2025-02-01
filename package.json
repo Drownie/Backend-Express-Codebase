@@ -1,29 +1,34 @@
 {
-  "name": "mamon-app",
-  "version": "1.0.0",
+  "name": "backend-express-codebase",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "start:dev": "npm run build && pm2 restart pm2_config.json",
-    "dev": "nodemon src/index.ts",
+    "migrations:dev:gen": "npx cross-env NODE_ENV=dev typeorm-ts-node-commonjs migration:generate ./src/migrations/dev -d ./src/data-source.ts",
+    "migrations:dev:run": "npx cross-env NODE_ENV=dev typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts",
+    "local:dev:watch": "npx cross-env NODE_ENV=dev tsnd --respawn ./src/index.ts",
+    "local:dev:pm2": "npm run build && pm2 restart pm2_config.json",
+    "local:dev:start": "node dist/index.js",
     "build": "tsc"
   },
   "author": "drownie",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "axios": "^1.6.5",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "firebase": "^10.7.0",
-    "firebase-admin": "^11.11.1",
+    "firebase-admin": "^13.0.2",
     "joi": "^17.11.0",
-    "moment-timezone": "^0.5.44",
     "pg": "^8.11.3",
+    "typeorm": "^0.3.20",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
@@ -35,6 +40,7 @@
     "@types/uuid": "^9.0.7",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.2"
   }
 }

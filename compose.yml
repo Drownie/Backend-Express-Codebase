@@ -1,17 +1,17 @@
 services:
   dev-db:
-    image: postgres:15
+    image: postgres:16
     ports:
       - 127.0.0.1:5434:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: mamonDB
+      POSTGRES_DB: template
     networks:
-      - mamon
+      - template
     volumes:
-      - mamonDB:/var/lib/postgresql/data
+      - templateDB:/var/lib/postgresql/data
 networks:
-  mamon:
+  template:
 volumes:
-  mamonDB:
+  templateDB:

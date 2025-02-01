@@ -2,12 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { Request, Response, NextFunction } from "express";
+import dataSource from './data-source';
 
-import * as routes from './app';
-import { _Database } from './database';
+import { routes } from './app';
 import { setting, corsOptions } from './config/setting';
-import { ResponseBuilder } from './utils';
-import { getRDSConnection } from './database/postgresql';
+import { ResponseBuilder } from './common/responseBuilder';
 
 export const app = express();
 
@@ -19,30 +18,40 @@ app.use(bodyParser.json({ type: 'application/json', limit: '1mb'}));
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.text({ type: 'application/xml' }));
 
-getRDSConnection().then(() => {
-    console.log('Successfully Connected to the DB')
-});
+// Public
+// app.use(express.static(path.join(__dirname, '..', 'public')));
 
-for (let eachRoute of routes.default) {
-    const middleware = eachRoute.middleware;
-    const handler = eachRoute.handler;
-    const method = eachRoute.method;
-    const path = eachRoute.path;
+// Init Datasource
+dataSource.initialize()
+    .then(() => console.log('Database Connected'))
+    .catch((err) => console.log(`Database Init Error: ${JSON.stringify(err)}`));
 
-    console.log(method, "->", path);
+for (let route of routes) {
+    const middleware = route.middleware;
+    const handler = route.handler;
+    const method = route.method;
+    const path = route.path;
 
     if (middleware) {
-        app[method.toLowerCase() as 'get' | 'post' | 'put' | 'delete'](path, ...middleware, handler);
+        console.log(`[${method}] ${path} - has ${middleware.length} middlewares`);
+        app[method](path, ...middleware, handler);
     } else {
-        app[method.toLowerCase() as 'get' | 'post' | 'put' | 'delete'](path, handler);
+        console.log(`[${method}] ${path} - has 0 middlewares`);
+        app[method](path, handler);
     }
 }
 
+app.use((req: Request, _res: Response, next: NextFunction) => {
+    console.log(`Request on [${req.method}](${req.path})`);
+    next()
+})
+
 // Error Handler
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((error: Error, _req: Request, res: Response, _next: NextFunction) => {
     const errorResponse = ResponseBuilder.errorBuilder(error.message);
     res.status(500).send(errorResponse);
 });
 
-const port = setting.port;
-app.listen(port, () => console.log(`Listening on PORT ${port}`));
+app.listen(setting.app_port, () => {
+    console.log(`Server is now listening to env : ${setting.app_env}, port : ${setting.app_port}`)
+});

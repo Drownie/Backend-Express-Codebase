@@ -1,12 +1,20 @@
 import { CorsOptions } from 'cors';
 import dotenv from 'dotenv';
-import * as process from "process";
-dotenv.config();
+
+dotenv.config({ path: `.env.${process.env.NODE_ENV}`, debug: true, encoding: 'utf8' });
 
 export const setting = {
-    host: process.env.HOST,
-    port: process.env.PORT || '3434',
-    connectionString: process.env.CONNECTION_STRING,
+    // Database Config
+    databaseUsername: process.env.DB_USERNAME,
+    databasePassword: process.env.DB_PASSWORD,
+    databaseName: process.env.DB_NAME,
+    databaseHost: process.env.DB_HOST,
+    databasePort: process.env.DB_PORT || '3434',
+
+    // App
+    app_port: process.env.APP_PORT,
+    app_env: process.env.NODE_ENV,
+
     firebaseType: process.env.FIREBASE_TYPE,
     firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
     firebasePrivateKeyId: process.env.FIREBASE_PRIVATE_KEY_ID,
